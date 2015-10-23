@@ -50,7 +50,8 @@ $(document).ready(function () {
 
                     // lock port select & baud while we are connecting / connected
                     $('div#port-picker #port, div#port-picker #baud, div#port-picker #delay').prop('disabled', true);
-                    $('div#port-picker a.connect').text(chrome.i18n.getMessage('connecting'));
+                    $('div#port-picker a.connect_state').text(chrome.i18n.getMessage('connecting'));
+
 
                     serial.connect(selected_port, {bitrate: selected_baud}, onOpen);
                 } else {
@@ -78,9 +79,9 @@ $(document).ready(function () {
                     if (!GUI.auto_connect) $('div#port-picker #baud').prop('disabled', false);
 
                     // reset connect / disconnect button
-                    $(this).text(chrome.i18n.getMessage('connect'));
-                    $(this).removeClass('active');
-
+        			$('div#port-picker a.connect').removeClass('active');
+					$('div#port-picker a.connect_state').text(chrome.i18n.getMessage('connect'));
+                   
                     // reset active sensor indicators
                     sensor_status(0);
 
@@ -229,7 +230,7 @@ function onOpen(openInfo) {
         console.log('Failed to open serial port');
         GUI.log(chrome.i18n.getMessage('serialPortOpenFail'));
 
-        $('div#port-picker a.connect').text(chrome.i18n.getMessage('connect'));
+        $('div#port-picker a.connect_state').text(chrome.i18n.getMessage('connect'));
         $('div#port-picker a.connect').removeClass('active');
 
         // unlock port select & baud
@@ -242,7 +243,8 @@ function onOpen(openInfo) {
 
 function onConnect() {
     GUI.timeout_remove('connecting'); // kill connecting timer
-    $('div#port-picker a.connect').text(chrome.i18n.getMessage('disconnect')).addClass('active');
+    $('a.connect_state').text(chrome.i18n.getMessage('disconnect')).addClass('active');
+    $('div#port-picker a.connect').addClass('active');
     $('#tabs ul.mode-disconnected').hide();
     $('#tabs ul.mode-connected').show();
 
