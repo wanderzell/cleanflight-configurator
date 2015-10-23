@@ -304,7 +304,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
 
         // fill battery
         $('input[name="mincellvoltage"]').val(MISC.vbatmincellvoltage);
-        $('input[name="warningcellvoltage"]').val(MISC.vbatwarningcellvoltage);
         $('input[name="maxcellvoltage"]').val(MISC.vbatmaxcellvoltage);
         $('input[name="warningcellvoltage"]').val(MISC.vbatwarningcellvoltage);
         $('input[name="voltagescale"]').val(MISC.vbatscale);
@@ -381,7 +380,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             MISC.mincommand = parseInt($('input[name="mincommand"]').val());
 
             MISC.vbatmincellvoltage = parseFloat($('input[name="mincellvoltage"]').val());
-            MISC.vbatwarningcellvoltage = parseFloat($('input[name="warningcellvoltage"]').val());
             MISC.vbatmaxcellvoltage = parseFloat($('input[name="maxcellvoltage"]').val());
             MISC.vbatwarningcellvoltage = parseFloat($('input[name="warningcellvoltage"]').val());
             MISC.vbatscale = parseInt($('input[name="voltagescale"]').val());
@@ -429,21 +427,13 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
 
             function reinitialize() {
                 GUI.log(chrome.i18n.getMessage('deviceRebooting'));
-                
-                if (BOARD.find_board_definition(CONFIG.boardIdentifier).vcp) { // VCP-based flight controls may crash old drivers, we catch and reconnect
-                    $('a.connect').click();
-                    GUI.timeout_add('start_connection',function start_connection() {
-                        $('a.connect').click();
-                    },2000);
-                } else {
 
-                    GUI.timeout_add('waiting_for_bootup', function waiting_for_bootup() {
-                        MSP.send_message(MSP_codes.MSP_IDENT, false, false, function () {
-                            GUI.log(chrome.i18n.getMessage('deviceReady'));
-                            TABS.configuration.initialize(false, $('#content').scrollTop());
-                        });
-                    },1500); // 1500 ms seems to be just the right amount of delay to prevent data request timeouts
-                }
+                GUI.timeout_add('waiting_for_bootup', function waiting_for_bootup() {
+                    MSP.send_message(MSP_codes.MSP_IDENT, false, false, function () {
+                        GUI.log(chrome.i18n.getMessage('deviceReady'));
+                        TABS.configuration.initialize(false, $('#content').scrollTop());
+                    });
+                },1500); // 1500 ms seems to be just the right amount of delay to prevent data request timeouts
             }
 
             MSP.send_message(MSP_codes.MSP_SET_BF_CONFIG, MSP.crunch(MSP_codes.MSP_SET_BF_CONFIG), false, save_serial_config);

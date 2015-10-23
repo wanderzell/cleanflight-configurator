@@ -260,7 +260,7 @@
         "message": "Calibrate Accelerometer"
     },
     "initialSetupCalibrateAccelText": {
-        "message": "Place board or frame on <strong>leveled</strong> surface, proceed with calibration, ensure platform is not moving during calibration"
+        "message": "Place board or frame on <strong>leveled</strong> surface, proceed with calibration, ensure platform is not moving during calibration period"
     },
     "initialSetupButtonCalibrateMag": {
         "message": "Calibrate Magnetometer"
@@ -488,9 +488,6 @@
     },
     "configurationBatteryMinimum": {
         "message": "Minimum Cell Voltage"
-    },
-    "configurationBatteryWarning": {
-        "message": "Warning Cell Voltage"
     },
     "configurationBatteryMaximum": {
         "message": "Maximum Cell Voltage"
