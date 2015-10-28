@@ -8,8 +8,7 @@ TABS.firmware_flasher.initialize = function (callback) {
         GUI.active_tab = 'firmware_flasher';
         googleAnalytics.sendAppView('Firmware Flasher');
     }
-	
-	
+
     var intel_hex = false, // standard intel hex in string format
         parsed_hex = false; // parsed raw hex in array format
         
@@ -17,19 +16,7 @@ TABS.firmware_flasher.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
-	// load switchery
-	var elems = Array.prototype.slice.call(document.querySelectorAll('#toggle'));
-
-elems.forEach(function(html) {
-  var switchery = new Switchery(html,
-  {
-    color: '#59aa29', 
-    secondaryColor: '#c4c4c4' 
-});
-  });
-  
-  
-          function parse_hex(str, callback) {
+        function parse_hex(str, callback) {
             // parsing hex in different thread
             var worker = new Worker('./js/workers/hex_parser.js');
 
@@ -320,15 +307,10 @@ elems.forEach(function(html) {
             if (!$(this).hasClass('locked')) {
                 if (!GUI.connect_lock) { // button disabled while flashing is in progress
                     if (parsed_hex != false) {
-                        var options = {};
-
-                        if ($('input.erase_chip').is(':checked')) {
-                            options.erase_chip = true;
-                        }
-
                         if (String($('div#port-picker #port').val()) != 'DFU') {
                             if (String($('div#port-picker #port').val()) != '0') {
-                                var port = String($('div#port-picker #port').val()),
+                                var options = {},
+                                    port = String($('div#port-picker #port').val()),
                                     baud;
 
                                 switch (GUI.operating_system) {
@@ -350,6 +332,10 @@ elems.forEach(function(html) {
                                     options.reboot_baud = parseInt($('div#port-picker #baud').val());
                                 }
 
+                                if ($('input.erase_chip').is(':checked')) {
+                                    options.erase_chip = true;
+                                }
+
                                 if ($('input.flash_manual_baud').is(':checked')) {
                                     baud = parseInt($('#flash_manual_baud_rate').val());
                                 }
@@ -361,7 +347,7 @@ elems.forEach(function(html) {
                                 GUI.log('<span style="color: red">Please select valid serial port</span>');
                             }
                         } else {
-                            STM32DFU.connect(usbDevices.STM32DFU, parsed_hex, options);
+                            STM32DFU.connect(usbDevices.STM32DFU, parsed_hex);
                         }
                     } else {
                         $('span.progressLabel').text(chrome.i18n.getMessage('firmwareFlasherFirmwareNotLoaded'));
@@ -541,6 +527,3 @@ TABS.firmware_flasher.cleanup = function (callback) {
 
     if (callback) callback();
 };
-
-
-
