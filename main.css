@@ -541,7 +541,9 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 #log.active {
-    overflow-y: scroll; /* scroll*/
+  overflow-y: auto; /* scroll*/
+  /* forcing the scrollbar not good - because it will show the bar even if
+    there is nothing to scroll. better use 'auto' */
 	box-shadow: inset 0 0 15px #000000;
 }
 
@@ -570,16 +572,14 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 .logswitch {
-	position:fixed;
-	right: 7px;
-	margin-top:-1px;
-	float:right;
-	padding:5px;
+	position: absolute;
+	right: 20px;
+  padding: 2px;
 	z-index:10;
 	}
 
 .logswitch a {
-	color:#656565;
+	color: #656565 !important;
 	}
 
 
@@ -598,7 +598,8 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #tabs ul {
-  overflow-y: auto; /* do not force scrollbars as it renders blank stripe on some user agents */
+  /*overflow-y: auto;*/
+  /* do not force scrollbars as it renders blank stripe on some user agents */
 }
 
 #tabs.logopen ul {
@@ -1428,11 +1429,11 @@ dialog {
 	color:#fff;
 	font-size: 10px;
 	}
-	
-	
+
+
 @media only screen and (max-width: 1055px), only screen and (max-device-width: 1055px) {
 
-	
+
 .tab_title {
 	font-size:16px;
 	line-height:18px;
@@ -1448,7 +1449,7 @@ dialog {
 	font-size:9px;
 	line-height:15px;
 	}
-		
+
 #content {
     height:calc(100% - 151px); /*  (port picker 105px, log CLOSED 25px, status bar: 20px + padding) - was: calc(100% - 171px)*/
 }
@@ -1456,7 +1457,8 @@ dialog {
 
 
 body {
-    font-size: 11px;
+    /*font-size: 11px;*/
+    /* lets see if we really need this? */
 	}
 
 .tab-setup, .tab-landing, .tab-adjustments, .tab-auxiliary, .tab-cli, .tab-configuration, .tab-dataflash, .tab-firmware_flasher, .tab-gps, .tab-help, .tab-led-strip, .tab-logging, .tab-modes, .tab-motors, .tab-pid_tuning, .tab-ports, .tab-receiver, .tab-sensors, .tab-servos {
@@ -1466,7 +1468,7 @@ body {
 	height:calc(100% - 20px) !important;
 	position:absolute !important;
 	}
-	
+
 .cf_table td {
 	padding-top:2px;
 	padding-bottom:2px;
@@ -1477,9 +1479,9 @@ body {
 }
 
 .default_btn a {
- 	font-size:11px;
+ 	/*font-size:11px;*/
 }
-	
+
 #tabs li a {
 	font-family: 'open_sansregular', Arial;
 	font-size:12px;
@@ -1506,7 +1508,7 @@ body {
 	padding-bottom:0px;
 	margin-bottom:5px;
 	}
-	
+
 .spacer_box_title {
     padding-left: 10px;
     padding-right: 10px;
@@ -1514,7 +1516,7 @@ body {
     margin-bottom: 0px;
 }
 
-	
+
 input {
 	font-size:11px !important;
 }
