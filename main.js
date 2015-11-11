@@ -64,20 +64,20 @@ $(document).ready(function () {
                 tabClass = $(self).parent().prop('class');
 
             var tabRequiresConnection = $(self).parent().hasClass('mode-connected');
-            
+
             var tab = tabClass.substring(4);
             var tabName = $(self).text();
-            
+
             if (tabRequiresConnection && !CONFIGURATOR.connectionValid) {
                 GUI.log(chrome.i18n.getMessage('tabSwitchConnectionRequired'));
                 return;
             }
-            
+
             if (GUI.connect_lock) { // tab switching disabled while operation is in progress
                 GUI.log(chrome.i18n.getMessage('tabSwitchWaitForOperation'));
                 return;
             }
-            
+
             if (GUI.allowedTabs.indexOf(tab) < 0) {
                 GUI.log(chrome.i18n.getMessage('tabSwitchUpgradeRequired', [tabName]));
                 return;
@@ -99,51 +99,51 @@ $(document).ready(function () {
                 // display loading screen
                 $('#cache .data-loading').clone().appendTo(content);
 
-                function content_ready() {
+                GUI.on_content_ready = function content_ready() {
                     GUI.tab_switch_in_progress = false;
-                    
+
                     $('.togglesmall').each(function(index, html) {
                         var switchery = new Switchery(html,
                         {
                           size: 'small',
-                          color: '#59aa29', 
-                          secondaryColor: '#c4c4c4' 
+                          color: '#59aa29',
+                          secondaryColor: '#c4c4c4'
                         });
-                        
+
                         $(html).removeClass('togglesmall');
                     });
 
                     $('.toggle').each(function(index, html) {
                         var switchery = new Switchery(html,
                         {
-                            color: '#59aa29', 
-                            secondaryColor: '#c4c4c4' 
+                            color: '#59aa29',
+                            secondaryColor: '#c4c4c4'
                         });
-                        
+
                         $(html).removeClass('toggle');
                     });
-                    
+
                     $('.togglemedium').each(function(index, html) {
                         var switchery = new Switchery(html,
                         {
                           className: 'switcherymid',
-                          color: '#59aa29', 
-                          secondaryColor: '#c4c4c4' 
+                          color: '#59aa29',
+                          secondaryColor: '#c4c4c4'
                         });
-                        
+
                         $(html).removeClass('togglemedium');
                     });
-                    
-                    
+
+
                     	// loading tooltip
                     jQuery(document).ready(function($) {
                     $('cf_tip').each(function() { // Grab all ".cf_tip" elements, and for each...
-                        log(this); // ...print out "this", which now refers to each ".cf_tip" DOM element 
+                        log(this); // ...print out "this", which now refers to each ".cf_tip" DOM element
                     });
 
-                    $('.cf_tip').each(function() { 
+                    $('.cf_tip').each(function() {
                         $(this).jBox('Tooltip', {
-                            content: $(this).children('.cf_tooltiptext'),		
+                            content: $(this).children('.cf_tooltiptext'),
                             delayOpen: 100,
                             delayClose: 100,
                             position: {
@@ -154,9 +154,9 @@ $(document).ready(function () {
                             });
                         });
                     });
-    
-    
-                    
+
+
+
                     // Build link to in-use CF version documentation
                     var documentationButton = $('div#content #button-documentation');
                     documentationButton.html("Documentation for "+CONFIG.flightControllerVersion);
@@ -165,63 +165,63 @@ $(document).ready(function () {
 
                 switch (tab) {
                     case 'landing':
-                        TABS.landing.initialize(content_ready);
+                        TABS.landing.initialize(GUI.on_content_ready);
                         break;
                     case 'firmware_flasher':
-                        TABS.firmware_flasher.initialize(content_ready);
+                        TABS.firmware_flasher.initialize(GUI.on_content_ready);
                         break;
                     case 'help':
-                        TABS.help.initialize(content_ready);
+                        TABS.help.initialize(GUI.on_content_ready);
                         break;
 
                     case 'auxiliary':
-                        TABS.auxiliary.initialize(content_ready);
+                        TABS.auxiliary.initialize(GUI.on_content_ready);
                         break;
                     case 'adjustments':
-                        TABS.adjustments.initialize(content_ready);
+                        TABS.adjustments.initialize(GUI.on_content_ready);
                         break;
                     case 'ports':
-                        TABS.ports.initialize(content_ready);
+                        TABS.ports.initialize(GUI.on_content_ready);
                         break;
                     case 'led_strip':
-                        TABS.led_strip.initialize(content_ready);
+                        TABS.led_strip.initialize(GUI.on_content_ready);
                         break;
-                                                
+
                     case 'setup':
-                        TABS.setup.initialize(content_ready);
+                        TABS.setup.initialize(GUI.on_content_ready);
                         break;
                     case 'configuration':
-                        TABS.configuration.initialize(content_ready);
+                        TABS.configuration.initialize(GUI.on_content_ready);
                         break;
                     case 'pid_tuning':
-                        TABS.pid_tuning.initialize(content_ready);
+                        TABS.pid_tuning.initialize(GUI.on_content_ready);
                         break;
                     case 'receiver':
-                        TABS.receiver.initialize(content_ready);
+                        TABS.receiver.initialize(GUI.on_content_ready);
                         break;
                     case 'modes':
-                        TABS.modes.initialize(content_ready);
+                        TABS.modes.initialize(GUI.on_content_ready);
                         break;
                     case 'servos':
-                        TABS.servos.initialize(content_ready);
+                        TABS.servos.initialize(GUI.on_content_ready);
                         break;
                     case 'gps':
-                        TABS.gps.initialize(content_ready);
+                        TABS.gps.initialize(GUI.on_content_ready);
                         break;
                     case 'motors':
-                        TABS.motors.initialize(content_ready);
+                        TABS.motors.initialize(GUI.on_content_ready);
                         break;
                     case 'sensors':
-                        TABS.sensors.initialize(content_ready);
+                        TABS.sensors.initialize(GUI.on_content_ready);
                         break;
                     case 'logging':
-                        TABS.logging.initialize(content_ready);
+                        TABS.logging.initialize(GUI.on_content_ready);
                         break;
                     case 'dataflash':
-                        TABS.dataflash.initialize(content_ready);
+                        TABS.dataflash.initialize(GUI.on_content_ready);
                         break;
                     case 'cli':
-                        TABS.cli.initialize(content_ready);
+                        TABS.cli.initialize(GUI.on_content_ready);
                         break;
 
                     default:
@@ -443,7 +443,7 @@ $("#showlog").on('click', function() {
     }
     $(this).text(state ? 'Hide Log' : 'Show Log');
     $(this).data('state', state);
-    
+
 });
 
 });
@@ -452,5 +452,3 @@ $("#showlog").on('click', function() {
 
 
 // loading tooltip PLACEHOLDER
-
-

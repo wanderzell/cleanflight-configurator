@@ -321,7 +321,7 @@ TABS.pid_tuning.initialize = function (callback) {
                 GUI.log(chrome.i18n.getMessage('pidTuningLoadedProfile', [profile + 1]));
 
                 GUI.tab_switch_cleanup(function () {
-                    TABS.pid_tuning.initialize();
+                    TABS.pid_tuning.initialize(GUI.on_content_ready);
                 });
             });
         });
@@ -329,7 +329,7 @@ TABS.pid_tuning.initialize = function (callback) {
         $('a.refresh').click(function () {
             GUI.tab_switch_cleanup(function () {
                 GUI.log(chrome.i18n.getMessage('pidTuningDataRefreshed'));
-                TABS.pid_tuning.initialize();
+                TABS.pid_tuning.initialize(GUI.on_content_ready);
             });
         });
 
@@ -376,7 +376,7 @@ TABS.pid_tuning.initialize = function (callback) {
                     MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function () {
                         GUI.log(chrome.i18n.getMessage('pidTuningEepromSaved'));
                     });
-                    TABS.pid_tuning.initialize();
+                    TABS.pid_tuning.initialize(GUI.on_content_ready);
                 });
             } else {
                 send_pids();

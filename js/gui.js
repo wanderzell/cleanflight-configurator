@@ -9,6 +9,7 @@ var GUI_control = function () {
     this.connect_lock = false;
     this.active_tab;
     this.tab_switch_in_progress = false;
+    this.on_content_ready = null;
     this.operating_system;
     this.interval_array = [];
     this.timeout_array = [];
@@ -24,14 +25,14 @@ var GUI_control = function () {
         'configuration',
         'gps',
         'led_strip',
-        'logging', 
+        'logging',
         'dataflash',
         'modes',
         'motors',
         'pid_tuning',
         'ports',
         'receiver',
-        'sensors', 
+        'sensors',
         'servos',
         'setup'
     ];
