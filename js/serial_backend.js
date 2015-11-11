@@ -79,9 +79,9 @@ $(document).ready(function () {
                     if (!GUI.auto_connect) $('div#port-picker #baud').prop('disabled', false);
 
                     // reset connect / disconnect button
-        			$('div.connect_controls a.connect').removeClass('active');
-					$('div.connect_controls a.connect_state').text(chrome.i18n.getMessage('connect'));
-                   
+        			      $('div.connect_controls a.connect').removeClass('active');
+					          $('div.connect_controls a.connect_state').text(chrome.i18n.getMessage('connect'));
+
                     // reset active sensor indicators
                     sensor_status(0);
 
@@ -132,7 +132,7 @@ $(document).ready(function () {
             }
 
             chrome.storage.local.set({'auto_connect': GUI.auto_connect});
-            
+
 
         });
     });
@@ -140,7 +140,7 @@ $(document).ready(function () {
 
     PortHandler.initialize();
     PortUsage.initialize();
-    
+
 
 
 });
@@ -257,14 +257,16 @@ function onConnect() {
     $('#tabs ul.mode-disconnected').hide();
     $('#tabs ul.mode-connected').show();
 
-    if ("CLFL" == CONFIG.flightControllerIdentifier){
-        
+    //if ("CLFL" == CONFIG.flightControllerIdentifier){
+    //not sure why this check was needed? disabling it to show sensors for all.
+
         var sensor_state = $('#sensor-status');
-        sensor_state.show(); 
-       	
+        sensor_state.show();
+
         var port_picker = $('#portsinput');
-        port_picker.hide(); 
-    }
+        port_picker.hide();
+
+    //}
 }
 
 function onClosed(result) {
@@ -278,12 +280,12 @@ function onClosed(result) {
     $('#tabs ul.mode-disconnected').show();
 
     var port_picker = $('#portsinput');
-    port_picker.show(); 
+    port_picker.show();
 
     /* */
     var sensor_state = $('#sensor-status');
     sensor_state.hide();
-   
+
 }
 
 function read_serial(info) {
@@ -312,54 +314,50 @@ function sensor_status(sensors_detected) {
 
     if (have_sensor(sensors_detected, 'acc')) {
         $('.accel', e_sensor_status).addClass('on');
-    	$('.accicon', e_sensor_status).addClass('active');
-
+    	  $('.accicon', e_sensor_status).addClass('active');
     } else {
         $('.accel', e_sensor_status).removeClass('on');
-		$('.accicon', e_sensor_status).removeClass('active');
-
+		    $('.accicon', e_sensor_status).removeClass('active');
     }
 
     if (have_sensor(sensors_detected, 'gyro')) {
         $('.gyro', e_sensor_status).addClass('on');
-		$('.gyroicon', e_sensor_status).addClass('active');
-
+		    $('.gyroicon', e_sensor_status).addClass('active');
     } else {
         $('.gyro', e_sensor_status).removeClass('on');
-		$('.gyroicon', e_sensor_status).removeClass('active');
-
+		    $('.gyroicon', e_sensor_status).removeClass('active');
     }
 
     if (have_sensor(sensors_detected, 'baro')) {
         $('.baro', e_sensor_status).addClass('on');
-		$('.baroicon', e_sensor_status).addClass('active');
+		    $('.baroicon', e_sensor_status).addClass('active');
     } else {
         $('.baro', e_sensor_status).removeClass('on');
-		$('.baroicon', e_sensor_status).removeClass('active');
+		    $('.baroicon', e_sensor_status).removeClass('active');
     }
 
     if (have_sensor(sensors_detected, 'mag')) {
         $('.mag', e_sensor_status).addClass('on');
-		$('.magicon', e_sensor_status).addClass('active');
+		    $('.magicon', e_sensor_status).addClass('active');
     } else {
         $('.mag', e_sensor_status).removeClass('on');
-		$('.magicon', e_sensor_status).removeClass('active');
+		    $('.magicon', e_sensor_status).removeClass('active');
     }
 
     if (have_sensor(sensors_detected, 'gps')) {
         $('.gps', e_sensor_status).addClass('on');
-		$('.gpsicon', e_sensor_status).addClass('active');
+		    $('.gpsicon', e_sensor_status).addClass('active');
     } else {
         $('.gps', e_sensor_status).removeClass('on');
-		$('.gpsicon', e_sensor_status).removeClass('active');
+		    $('.gpsicon', e_sensor_status).removeClass('active');
     }
 
     if (have_sensor(sensors_detected, 'sonar')) {
         $('.sonar', e_sensor_status).addClass('on');
-		$('.sonaricon', e_sensor_status).addClass('active');
+		    $('.sonaricon', e_sensor_status).addClass('active');
     } else {
         $('.sonar', e_sensor_status).removeClass('on');
-		$('.sonaricon', e_sensor_status).removeClass('active');
+		    $('.sonaricon', e_sensor_status).removeClass('active');
     }
 }
 
@@ -403,5 +401,3 @@ function bit_set(num, bit) {
 function bit_clear(num, bit) {
     return num & ~(1 << bit);
 }
-
-
